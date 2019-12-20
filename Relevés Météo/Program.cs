@@ -9,25 +9,18 @@ namespace Relevés_Météo
     {
         static void Main(string[] args)
         {
-			var relevéMensuels = new List<RelevéMensuel>();
 			Console.OutputEncoding = Encoding.UTF8;
 			Console.WriteLine("Mois    | T° min | T° max | Précip(mm) | Ensol(H)");
 			Console.WriteLine("----------------------------------------------------");
-			var file = File.ReadAllLines("..\\..\\..\\DonnéesMétéoParis.txt", Encoding.UTF8);
-			try
-			{
-				for (int i = 1; i < file.Length; i++)
-				{
-					var relevé = new RelevéMensuel(file[i]);
-					relevéMensuels.Add(relevé);
-					Console.WriteLine(relevé);
-				}
-			}
-			catch (FormatException e)
-			{
-				Console.WriteLine(e.Message);
-			}
-			
+            var a = new Stats(DAL.GetRelevésMensuels());
+            Console.WriteLine(a.ReleveTempMax);
+            Console.WriteLine(a.GetPréciptationsAnnée(2008));
+            Console.WriteLine(a.EnsoleillementMoyenJuillet);
+            Console.WriteLine(a.NbMoisChauds);
+            foreach (var item in a.PrécipitationsMoyennesParAnnée)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
